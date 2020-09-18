@@ -5,6 +5,7 @@ import se.edu.inclass.task.Deadline;
 import se.edu.inclass.task.Task;
 import se.edu.inclass.task.TaskNameComparator;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class Main {
         //System.out.println("Printing deadlines");
         //printDeadlines(tasksData);
 
+
         //System.out.println("Total number of deadlines: " + countDeadlines(tasksData));
 
         printDeadlinesUsingStreams(tasksData);
@@ -29,6 +31,15 @@ public class Main {
         for(Task t: filterByString(tasksData, "11")) {
             System.out.println(t);
         }
+
+
+        //System.out.println("Total number of deadlines: " + countDeadlines(tasksData));
+
+        printDataUsingStreams(tasksData);
+
+
+        System.out.println("Total number of deadlines using streams: " + countDeadlinesUsingStreams(tasksData));
+
 
     }
 
@@ -42,10 +53,27 @@ public class Main {
         return count;
     }
 
+    public static int countDeadlinesUsingStreams(ArrayList<Task> tasksData) {
+        System.out.println("\nCalculating count using streams");
+        int count;
+
+        count = (int) tasksData.stream()
+                .filter((t) -> t instanceof Deadline)
+                .count();
+
+        return count;
+    }
+
     public static void printData(ArrayList<Task> tasksData) {
         for (Task t : tasksData) {
             System.out.println(t);
         }
+    }
+
+    public static void printDataUsingStreams(ArrayList<Task> tasksData) {
+        System.out.println("Printing data using streams");
+        tasksData.stream()
+                .forEach(System.out::println);
     }
 
     public static void printDeadlines(ArrayList<Task> tasksData) {
@@ -56,7 +84,9 @@ public class Main {
         }
     }
 
+
     public static void printDeadlinesUsingStreams(ArrayList<Task> tasksList) {
+        System.out.println("\nPrinting deadlines using streams");
         tasksList.stream()
                 .filter((s) -> s instanceof Deadline)
                 .sorted((a, b) -> a.getDescription().toLowerCase().compareTo(b.getDescription().toLowerCase()))
@@ -70,4 +100,5 @@ public class Main {
 
         return filteredTaskList;
     }
+
 }
